@@ -1,11 +1,13 @@
 var cityInputEl = document.querySelector("#cityInput");
 var cityNameEl = document.querySelector("#cityName");
+var forcast = document.querySelector("#forecast")
+var searchHistory
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
 
     var cityName = cityNameEl.value.trim();
-
+    // setHistory(cityName)
     if (cityName) {
         geoData(cityName);
 
@@ -17,7 +19,7 @@ var formSubmitHandler = function (event) {
 
 var geoData = function (city) {
 
-    var geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=9b0306363b5cc9091aabbebcc259c820`;
+    var geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=9b0306363b5cc9091aabbebcc259c820`;
 
     fetch(geoUrl)
         .then(function (response) {
@@ -25,7 +27,7 @@ var geoData = function (city) {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    oneCall();
+                    oneCall(data[0].lat, data[0].lon);
                 });
             } else {
                 alert("Error: " + response.statusText);
@@ -43,8 +45,39 @@ var oneCall = function (lat, lon) {
         })
         .then(function(data) {
             console.log(data);
-            // render data to page here
+            renderToday(data)
         })
 }
+
+// var renderToday = function (weatherData) {
+//     moment.unix(weatherData.current.dt).format()
+//     console.log(moment.unix(weatherData.current.dt).format("MM/DD/YYYY"))
+// }
+
+// var renderWeek = function () {
+
+// }
+
+// var setHistory = function(city) {
+//     if(searchHistory === "") {
+//         var historyArray = searchHistory.split(" ")
+//     }
+//     historyArray.push(city)
+//     console.log(historyArray)
+//     var historyString = historyArray.join(" ")
+//     localStorage.setItem("history", historyString)
+
+// }
+
+// var retrieveHistroy = function() {
+//     if (!localStorage.getItem("history")){
+//         searchHistory = ""
+//     } else {
+//         searchHistory = localStorage.getItem("history")
+//     }
+//     console.log(searchHistory)
+// }
+
+// retrieveHistroy()
 
 cityInputEl.addEventListener("submit", formSubmitHandler);
