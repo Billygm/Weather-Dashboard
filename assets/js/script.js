@@ -1,7 +1,10 @@
 var cityInputEl = document.querySelector("#cityInput");
 var cityNameEl = document.querySelector("#cityName");
+var searchButton = document.querySelector("#searchButton")
+var searchHistory = document.querySelector("#searchHistory")
 var forcast = document.querySelector("#forecast")
-var searchHistory
+var fiveDay = document.querySelector("#fiveDay")
+var searchedCitys = JSON.parse(localStorage.getItem("history")) || [];
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
@@ -10,7 +13,9 @@ var formSubmitHandler = function (event) {
     // setHistory(cityName)
     if (cityName) {
         geoData(cityName);
-
+        console.log(cityName)
+        searchedCitys.push(cityName)
+        localStorage.setItem("history", JSON.stringify(searchedCitys))
         cityNameEl.value = "";
     } else {
         alert("Please enter a valid location");
@@ -19,7 +24,7 @@ var formSubmitHandler = function (event) {
 
 var geoData = function (city) {
 
-    var geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=9b0306363b5cc9091aabbebcc259c820`;
+    var geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=9b0306363b5cc9091aabbebcc259c820`;
 
     fetch(geoUrl)
         .then(function (response) {
@@ -35,6 +40,7 @@ var geoData = function (city) {
         });
 }
 
+
 var oneCall = function (lat, lon) {
     var oneCallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&lang=en&appid=9b0306363b5cc9091aabbebcc259c820
     `;
@@ -43,16 +49,22 @@ var oneCall = function (lat, lon) {
         .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             console.log(data);
             renderToday(data)
-        })
+        });
 }
 
-// var renderToday = function (weatherData) {
-//     moment.unix(weatherData.current.dt).format()
-//     console.log(moment.unix(weatherData.current.dt).format("MM/DD/YYYY"))
-// }
+var renderToday = function (weatherData) {
+    forcast.innerHTML = cityName + moment.unix(weatherData.current.dt).format("MM/DD/YYYY")
+    console.log(moment.unix(weatherData.current.dt).format("MM/DD/YYYY"))
+    console.log(weatherData.current.temp)
+    console.log(weatherData.current.humidity)
+    console.log(weatherData.current.uvi)
+}
+
+cityInputEl.addEventListener("submit", formSubmitHandler);
+
 
 // var renderWeek = function () {
 
@@ -79,5 +91,3 @@ var oneCall = function (lat, lon) {
 // }
 
 // retrieveHistroy()
-
-cityInputEl.addEventListener("submit", formSubmitHandler);
