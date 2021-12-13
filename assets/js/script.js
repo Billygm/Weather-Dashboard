@@ -10,13 +10,11 @@ var formSubmitHandler = function (event) {
     event.preventDefault();
 
     var cityName = cityNameEl.value.trim();
-    // setHistory(cityName)
     if (cityName) {
         geoData(cityName);
         console.log(cityName)
         searchedCitys.push(cityName)
         localStorage.setItem("history", JSON.stringify(searchedCitys))
-        cityNameEl.value = "";
     } else {
         alert("Please enter a valid location");
     }
@@ -56,11 +54,21 @@ var oneCall = function (lat, lon) {
 }
 
 var renderToday = function (weatherData) {
-    forcast.innerHTML = cityName + moment.unix(weatherData.current.dt).format("MM/DD/YYYY")
-    console.log(moment.unix(weatherData.current.dt).format("MM/DD/YYYY"))
+    var current = `<div>
+    <h3>${cityNameEl.value + " " + moment.unix(weatherData.current.dt).format("MM/DD/YYYY")}</h3>
+    <p>${"Temp: " + weatherData.current.temp}</p>
+    <p>${"Wind Speed: " + weatherData.current.wind_speed}</p>
+    <p>${"Humidity: " + weatherData.current.humidity}</p>
+    <p>${"UV Index: " + weatherData.current.uvi}</p>
+    </div>`
+    forcast.innerHTML = current
+
+    console.log(cityNameEl.value + " " + moment.unix(weatherData.current.dt).format("MM/DD/YYYY"))
     console.log(weatherData.current.temp)
     console.log(weatherData.current.humidity)
     console.log(weatherData.current.uvi)
+    console.log(weatherData.current.wind_speed)
+    cityNameEl.value = "";
 }
 
 cityInputEl.addEventListener("submit", formSubmitHandler);
@@ -69,25 +77,3 @@ cityInputEl.addEventListener("submit", formSubmitHandler);
 // var renderWeek = function () {
 
 // }
-
-// var setHistory = function(city) {
-//     if(searchHistory === "") {
-//         var historyArray = searchHistory.split(" ")
-//     }
-//     historyArray.push(city)
-//     console.log(historyArray)
-//     var historyString = historyArray.join(" ")
-//     localStorage.setItem("history", historyString)
-
-// }
-
-// var retrieveHistroy = function() {
-//     if (!localStorage.getItem("history")){
-//         searchHistory = ""
-//     } else {
-//         searchHistory = localStorage.getItem("history")
-//     }
-//     console.log(searchHistory)
-// }
-
-// retrieveHistroy()
