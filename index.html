@@ -12,21 +12,21 @@
 </head>
 
 <body>
-    <header class="p-2 mb-2">
+    <header class="p-2 mb-2 text-center">
         <h1>Weather Dashboard</h1>
     </header>
 
     <div class="row">
-        <aside id="searchCol" class="col-4">
+        <aside id="searchCol" class="col-3">
             <h2>Search for a City:</h2>
             <form id="cityInput">
                 <input id="cityName" class="form-control form-control-lg" type="text" placeholder="City Name">
                 <button id="searchButton" class="btn btn-primary col-12" type="submit">Search</button>
-                <div id="searchHistory"></div>
             </form>
+            <div id="searchHistory"></div>
         </aside>
 
-        <main class="col-8">
+        <main class="col-9">
             <div id="forecast"></div>
             <div id="fiveDay"></div>
         </main>

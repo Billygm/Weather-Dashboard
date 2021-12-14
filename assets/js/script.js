@@ -5,6 +5,9 @@ var searchHistory = document.querySelector("#searchHistory")
 var forcast = document.querySelector("#forecast")
 var fiveDay = document.querySelector("#fiveDay")
 var searchedCitys = JSON.parse(localStorage.getItem("history")) || [];
+var dayColor = "background-color:#023e8a; color:#0dcaf0";
+var weekColor = "background-color:#0dcaf0; color:023e8a;";
+var displayStyle = "display:flex";
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
@@ -16,6 +19,7 @@ var formSubmitHandler = function (event) {
         searchedCitys.push(cityName)
         localStorage.setItem("history", JSON.stringify(searchedCitys))
     } else {
+        console.log(cityName)
         alert("Please enter a valid location");
     }
 };
@@ -53,18 +57,18 @@ var oneCall = function (lat, lon) {
         });
 }
 
-var renderButtons = function() {
-        searchedCitys.forEach(function (city) {
-            var cityButtons = `</br>
+var renderButtons = function () {
+    searchedCitys.forEach(function (city) {
+        var cityButtons = `</br>
             <button class="btn btn-secondary col-12" type="submit">${city}</button>
             </br>`;
-            searchHistory.innerHTML += cityButtons
-        });        
+        searchHistory.innerHTML += cityButtons
+    });
 }
 renderButtons()
 
 var renderToday = function (weatherData) {
-    var today = `<div>
+    var today = `<div class="m-2 p-1 border border-3 border-dark" style="${dayColor}">
     <h3>${cityNameEl.value + " " + moment.unix(weatherData.current.dt).format("MM/DD/YYYY")}</h3>
     <p>${"Temp: " + weatherData.current.temp + "°F"}</p>
     <p>${"Wind Speed: " + weatherData.current.wind_speed + " MPH"}</p>
@@ -81,43 +85,46 @@ var renderToday = function (weatherData) {
     cityNameEl.value = "";
 }
 
+
 var renderWeek = function (weatherData) {
     var week = `<h3>5-Day Forecast:</h3>
-        <div>
+    <div style="${displayStyle}">
+        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[1].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[1].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[1].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[1].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[1].uvi}</p>
         </div>
-        <div>
+        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[2].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[2].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[2].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[2].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[2].uvi}</p>
         </div>
-        <div>
+        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[3].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[3].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[3].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[3].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[3].uvi}</p>
         </div>
-        <div>
+        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[4].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[4].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[4].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[4].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[4].uvi}</p>
         </div>
-        <div>
+        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[5].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[5].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[5].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[5].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[5].uvi}</p>
-        </div>`
+        </div>
+    </div>`
     fiveDay.innerHTML = week
 
     console.log(moment.unix(weatherData.daily[1].dt).format("MM/DD/YYYY"))
@@ -125,3 +132,4 @@ var renderWeek = function (weatherData) {
 }
 
 cityInputEl.addEventListener("submit", formSubmitHandler);
+searchHistory.addEventListener("click", formSubmitHandler);
