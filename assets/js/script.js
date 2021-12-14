@@ -5,7 +5,7 @@ var searchHistory = document.querySelector("#searchHistory")
 var forcast = document.querySelector("#forecast")
 var fiveDay = document.querySelector("#fiveDay")
 var searchedCitys = JSON.parse(localStorage.getItem("history")) || [];
-var dayColor = "background-color:#023e8a; color:#0dcaf0";
+var dayColor = "color:#0dcaf0";
 var weekColor = "background-color:#0dcaf0; color:023e8a;";
 var displayStyle = "display:flex";
 
@@ -24,6 +24,15 @@ var formSubmitHandler = function (event) {
     }
 };
 
+var buttonClickHandler = function (event) {
+    event.preventDefault();
+    var place = event.target.getAttribute("location");
+    if (place) {
+        geoData(place);
+        console.log(place)
+    }
+}
+
 var geoData = function (city) {
 
     var geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=9b0306363b5cc9091aabbebcc259c820`;
@@ -40,7 +49,7 @@ var geoData = function (city) {
                 alert("Error: " + response.statusText);
             }
         });
-}
+};
 
 var oneCall = function (lat, lon) {
     var oneCallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&lang=en&appid=9b0306363b5cc9091aabbebcc259c820
@@ -55,20 +64,20 @@ var oneCall = function (lat, lon) {
             renderToday(data)
             renderWeek(data)
         });
-}
+};
 
 var renderButtons = function () {
     searchedCitys.forEach(function (city) {
         var cityButtons = `</br>
-            <button class="btn btn-secondary col-12" type="submit">${city}</button>
+            <button location="${city}" class="btn btn-secondary col-12" type="submit">${city}</button>
             </br>`;
         searchHistory.innerHTML += cityButtons
     });
-}
+};
 renderButtons()
 
 var renderToday = function (weatherData) {
-    var today = `<div class="m-2 p-1 border border-3 border-dark" style="${dayColor}">
+    var today = `<div class="m-3 p-1 border border-3 border-info" style="${dayColor}">
     <h3>${cityNameEl.value + " " + moment.unix(weatherData.current.dt).format("MM/DD/YYYY")}</h3>
     <p>${"Temp: " + weatherData.current.temp + "°F"}</p>
     <p>${"Wind Speed: " + weatherData.current.wind_speed + " MPH"}</p>
@@ -83,7 +92,7 @@ var renderToday = function (weatherData) {
     console.log(weatherData.current.uvi)
     console.log(weatherData.current.wind_speed)
     cityNameEl.value = "";
-}
+};
 
 
 var renderWeek = function (weatherData) {
@@ -129,7 +138,7 @@ var renderWeek = function (weatherData) {
 
     console.log(moment.unix(weatherData.daily[1].dt).format("MM/DD/YYYY"))
     console.log(weatherData.daily[1].temp.day)
-}
+};
 
 cityInputEl.addEventListener("submit", formSubmitHandler);
-searchHistory.addEventListener("click", formSubmitHandler);
+searchHistory.addEventListener("click", buttonClickHandler);
