@@ -30,6 +30,7 @@ var buttonClickHandler = function (event) {
     if (place) {
         geoData(place);
         console.log(place)
+        cityNameEl.value = place
     }
 }
 
@@ -64,28 +65,39 @@ var oneCall = function (lat, lon) {
             renderToday(data)
             renderWeek(data)
         });
-};
-
-var renderButtons = function () {
-    searchedCitys.forEach(function (city) {
-        var cityButtons = `</br>
+    };
+    
+    var renderButtons = function () {
+        searchedCitys.forEach(function (city) {
+            var cityButtons = `</br>
             <button location="${city}" class="btn btn-secondary col-12" type="submit">${city}</button>
             </br>`;
-        searchHistory.innerHTML += cityButtons
-    });
-};
-renderButtons()
-
-var renderToday = function (weatherData) {
+            searchHistory.innerHTML += cityButtons
+        });
+    };
+    renderButtons()
+    
+    var uviColor = ""
+    
+    var renderToday = function (weatherData) {
     var today = `<div class="m-3 p-1 border border-3 border-info" style="${dayColor}">
     <h3>${cityNameEl.value + " " + moment.unix(weatherData.current.dt).format("MM/DD/YYYY")}</h3>
     <p>${"Temp: " + weatherData.current.temp + "°F"}</p>
     <p>${"Wind Speed: " + weatherData.current.wind_speed + " MPH"}</p>
     <p>${"Humidity: " + weatherData.current.humidity + "%"}</p>
-    <p>${"UV Index: " + weatherData.current.uvi}</p>
+    <p class="bg-${uviColor}">${"UV Index: " + weatherData.current.uvi}</p>
     </div>`
     forcast.innerHTML = today
-
+    if (weatherData.current.uvi >= 2) {
+       uviColor = "success"
+    } else if (weatherData.current.uvi >= 3 && weatherData.current.uvi <= 5) {
+        uviColor = "warning"
+    } else if (weatherData.current.uvi >= 6 && weatherData.current.uvi <= 7) {
+        uviColor = "#fd7e14"
+    } else if (weatherData.current.uvi <= 12) {
+        uviColor = "#danger"
+    }
+    
     console.log(cityNameEl.value + " " + moment.unix(weatherData.current.dt).format("MM/DD/YYYY"))
     console.log(weatherData.current.temp)
     console.log(weatherData.current.humidity)
@@ -96,7 +108,7 @@ var renderToday = function (weatherData) {
 
 
 var renderWeek = function (weatherData) {
-    var week = `<h3>5-Day Forecast:</h3>
+    var week = `<h3 color-info>5-Day Forecast:</h3>
     <div style="${displayStyle}">
         <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[1].dt).format("MM/DD/YYYY")}</h4>
