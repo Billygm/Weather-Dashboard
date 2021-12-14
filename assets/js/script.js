@@ -110,35 +110,35 @@ var oneCall = function (lat, lon) {
 var renderWeek = function (weatherData) {
     var week = `<h3 color-info>5-Day Forecast:</h3>
     <div style="${displayStyle}">
-        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
+        <div class="m-2 p-1 border border-3 border-secondary" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[1].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[1].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[1].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[1].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[1].uvi}</p>
         </div>
-        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
+        <div class="m-2 p-1 border border-3 border-secondary" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[2].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[2].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[2].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[2].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[2].uvi}</p>
         </div>
-        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
+        <div class="m-2 p-1 border border-3 border-secondary" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[3].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[3].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[3].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[3].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[3].uvi}</p>
         </div>
-        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
+        <div class="m-2 p-1 border border-3 border-secondary" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[4].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[4].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[4].wind_speed + " MPH"}</p>
         <p>${"Humidity: " + weatherData.daily[4].humidity + "%"}</p>
         <p>${"UV Index: " + weatherData.daily[4].uvi}</p>
         </div>
-        <div class="m-2 p-1 border border-3 border-dark" style="${weekColor}">
+        <div class="m-2 p-1 border border-3 border-secondary" style="${weekColor}">
         <h4>${moment.unix(weatherData.daily[5].dt).format("MM/DD/YYYY")}</h4>
         <p>${"Temp: " + weatherData.daily[5].temp.day + "°F"}</p>
         <p>${"Wind Speed: " + weatherData.daily[5].wind_speed + " MPH"}</p>
