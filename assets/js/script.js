@@ -36,7 +36,7 @@ var buttonClickHandler = function (event) {
 
 var geoData = function (city) {
 
-    var geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=9b0306363b5cc9091aabbebcc259c820`;
+    var geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=9b0306363b5cc9091aabbebcc259c820`;
 
     fetch(geoUrl)
         .then(function (response) {
