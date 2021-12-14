@@ -53,16 +53,15 @@ var oneCall = function (lat, lon) {
         });
 }
 
-// var renderButtons = function(event) {
-
-//     searchedCitys.forEach(function (city) {
-//         var cityButton = document.createElement("button");
-//         cityButton.innerText = city;
-//         searchHistory.appendChild(document.createElement("br"));
-//         searchHistory.appendChild(cityButton)
-//     });
-// }
-// renderButtons()
+var renderButtons = function() {
+        searchedCitys.forEach(function (city) {
+            var cityButtons = `</br>
+            <button class="btn btn-secondary col-12" type="submit">${city}</button>
+            </br>`;
+            searchHistory.innerHTML += cityButtons
+        });        
+}
+renderButtons()
 
 var renderToday = function (weatherData) {
     var today = `<div>
