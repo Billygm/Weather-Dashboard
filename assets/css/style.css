@@ -2,3 +2,7 @@ header {
     text-align: center;
     background-color: skyblue;
 }
+
+h3 {
+    display: hidden
+}
